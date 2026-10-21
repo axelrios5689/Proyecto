@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Actualización de Estudiantes</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 50px; max-width: 400px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; }
+        input { width: 100%; padding: 8px; box-sizing: border-box; }
+        button { padding: 10px 15px; background-color: #28a745; color: white; border: none; cursor: pointer; margin-top: 10px;}
+        .mensaje { margin-top: 20px; padding: 10px; display: none; }
+        .exito { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb;}
+        .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;}
+        #seccionActualizacion { display: none; margin-top: 20px; padding-top: 20px; border-top: 1px solid #ccc; }
+    </style>
+</head>
+<body>
+
+    <h2>Buscar Estudiante</h2>
+    <div id="mensajeBox" class="mensaje"></div>
+
+    <div class="form-group">
+        <label for="matricula">Matrícula del estudiante:</label>
+        <input type="text" id="matricula" placeholder="Ej. 23045">
+        <button type="button" id="btnBuscar" onclick="buscarEstudiante()">Buscar</button>
+    </div>
+
+    <div id="seccionActualizacion">
+        <h3>Actualizar Datos</h3>
+        <div class="form-group">
+            <label for="correo">Nuevo correo electrónico:</label>
+            <input type="email" id="correo">
+            <button type="button" id="btnActualizar" onclick="actualizarCorreo()">Actualizar Correo</button>
+        </div>
+    </div>
+
+    <script>
+        function buscarEstudiante() {
+            const matricula = document.getElementById('matricula').value.trim();
+            const msgBox = document.getElementById('mensajeBox');
+            const seccionActualizacion = document.getElementById('seccionActualizacion');
+            
+            msgBox.style.display = 'block';
+            seccionActualizacion.style.display = 'none';
+
+            if (matricula === "") {
+                mostrarMensaje("Error: Ingrese una matrícula.", "error");
+            } else if (!matricula.startsWith("23")) {
+                mostrarMensaje("Error: Matrícula inexistente.", "error");
+            } else {
+                msgBox.style.display = 'none';
+                seccionActualizacion.style.display = 'block';
+            }
+        }
+
+        function actualizarCorreo() {
+            const correo = document.getElementById('correo').value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (correo === "") {
+                mostrarMensaje("Error: El correo no puede estar vacío.", "error");
+            } else if (!emailRegex.test(correo)) {
+                mostrarMensaje("Error: Formato de correo inválido.", "error");
+            } else {
+                mostrarMensaje("Actualización exitosa.", "exito");
+            }
+        }
+
+        function mostrarMensaje(texto, tipo) {
+            const msgBox = document.getElementById('mensajeBox');
+            msgBox.style.display = 'block';
+            msgBox.className = 'mensaje ' + tipo;
+            msgBox.innerText = texto;
+        }
+    </script>
+</body>
+</html>
