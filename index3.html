@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Inicio de Sesión</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 50px; max-width: 350px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; }
+        input { width: 100%; padding: 8px; box-sizing: border-box; }
+        button { padding: 10px 15px; background-color: #0056b3; color: white; border: none; cursor: pointer; width: 100%;}
+        .mensaje { margin-top: 20px; padding: 10px; display: none; text-align: center; }
+        .exito { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb;}
+        .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;}
+    </style>
+</head>
+<body>
+
+    <h2>Iniciar Sesión</h2>
+    
+    <div class="form-group">
+        <label for="usuario">Usuario:</label>
+        <input type="text" id="usuario" placeholder="Ej. admin">
+    </div>
+    
+    <div class="form-group">
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" placeholder="Ej. password123">
+    </div>
+    
+    <button type="button" id="btnLogin" onclick="iniciarSesion()">Entrar</button>
+
+    <div id="mensajeBox" class="mensaje"></div>
+
+    <script>
+        // Credenciales válidas: admin / password123
+        function iniciarSesion() {
+            const usuario = document.getElementById('usuario').value.trim();
+            const password = document.getElementById('password').value;
+            const msgBox = document.getElementById('mensajeBox');
+            
+            msgBox.style.display = 'block';
+
+            if (usuario === "") {
+                mostrarMensaje("El campo usuario es obligatorio.", "error");
+            } else if (password === "") {
+                mostrarMensaje("El campo contraseña es obligatorio.", "error");
+            } else if (usuario !== "admin" || password !== "password123") {
+                mostrarMensaje("Credenciales incorrectas.", "error");
+            } else {
+                mostrarMensaje("Bienvenido al sistema.", "exito");
+            }
+        }
+
+        function mostrarMensaje(texto, tipo) {
+            const msgBox = document.getElementById('mensajeBox');
+            msgBox.className = 'mensaje ' + tipo;
+            msgBox.innerText = texto;
+        }
+    </script>
+</body>
+</html>
